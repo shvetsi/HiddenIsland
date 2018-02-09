@@ -1,0 +1,7 @@
+<div>
+    <ul>
+        <li *ngFor="let item of islands"
+        (click)="onSelect(item)"
+        {{item.value}}/>
+    </ul>
+</div>
