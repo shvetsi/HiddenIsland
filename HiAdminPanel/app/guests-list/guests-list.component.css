@@ -1,0 +1,9 @@
+li{
+    margin: 10px;
+    background: darkolivegreen;
+    color: darkgray;
+
+}
+li:hover{
+    border-bottom-color: darkgreen;
+}

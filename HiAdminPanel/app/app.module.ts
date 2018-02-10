@@ -5,6 +5,7 @@ import { HttpModule } from "@angular/http"
 
 import { routes } from "./app.routes"
 import { AppComponent } from "./app.component"
+import { GuestService } from "./shared/guest.servise";
 
 @NgModule({
     imports : [ BrowserModule,
@@ -13,7 +14,8 @@ import { AppComponent } from "./app.component"
     declarations: [
         AppComponent
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    providers: [ GuestService]
 })
 export class AppModule {
 

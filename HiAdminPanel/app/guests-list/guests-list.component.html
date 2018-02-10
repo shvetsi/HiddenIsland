@@ -1,0 +1,8 @@
+<div>
+    <button>Welcome new guest</button>
+    <ul>
+        <li *ngFor="let guest of guests"
+        (click)="onSelect(guest)"
+        {{guest.name}}/>
+    </ul>
+</div>
