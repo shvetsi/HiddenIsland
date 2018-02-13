@@ -1,21 +1,25 @@
 import { NgModule } from "@angular/core"
 import { BrowserModule } from "@angular/platform-browser"
-import { RouterModule } from "@angular/router"
-import { HttpModule } from "@angular/http"
 
-import { routes } from "./app.routes"
 import { AppComponent } from "./app.component"
 import { GuestService } from "./shared/guest.servise";
+import { HomeComponent } from "./home/home.component";
+import { AppRoutingModle } from "./app-routing.module";
+import { GuestsModule } from "./guests/guests.module";
+import { HttpModule } from "@angular/http";
 
 @NgModule({
-    imports : [ BrowserModule,
-    HttpModule,
-    RouterModule.forRoot(routes)],
+    imports : [ 
+        BrowserModule,
+        HttpModule,
+        AppRoutingModle,
+        GuestsModule],
     declarations: [
-        AppComponent
+        AppComponent,
+        HomeComponent
     ],
-    bootstrap: [AppComponent],
-    providers: [ GuestService]
+    providers: [ GuestService],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 

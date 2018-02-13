@@ -1,5 +1,7 @@
-h1.welcome-h {
-    
+div.welcome-div {
+    width:40%; 
+    margin: 0 auto; 
+    text-align: center
 }
 
 button.welcome-page-button {

@@ -6,9 +6,7 @@ export class Island{
     public name: string;
     public level: number;
 
-    constructor(name: string, guest: Guest){
+    constructor(name: string){
         this.name = name;
-        this.owner = guest;
-        this.guests.push(guest);
     }
 }
