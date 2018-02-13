@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <button>Welcome new guest</button>
+                <ul> 
+                    <li *ngFor="let guest of guests"
+                    (click)="onSelect(guest)"
+                    class="guests-li">{{guest.name}}</li>
+                </ul>
+        </div>
+        <div>
+            guests details will be here...
+    </div>
+</div>

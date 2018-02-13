@@ -1,0 +1,20 @@
+li.guests-li {
+    cursor: pointer;
+    margin:5px;
+    padding-left:10px;
+    color: rgb(216, 216, 216);
+    font-weight: bold
+}
+li.guests-li:hover {
+    background-color: rgb(1, 19, 0);
+}
+li.guests-li:active {
+    
+    background-color: rgb(1, 19, 0);
+}
+
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}

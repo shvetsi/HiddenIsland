@@ -1,5 +1,7 @@
 import { Routes } from "@angular/router"
 import { AppComponent } from "./app.component"
+import { HomeComponent } from "./home/home.component";
+import { GuestsModule } from "./guests/guests.module";
 
 export const routes : Routes = [
     {
@@ -7,8 +9,9 @@ export const routes : Routes = [
         redirectTo:"home",
         pathMatch: "full"
     },
+    
     {
         path: "home",
-        component: AppComponent
+        component: HomeComponent
     }
 ];
