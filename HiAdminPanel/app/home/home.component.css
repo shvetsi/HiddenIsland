@@ -4,40 +4,4 @@ div.welcome-div {
     text-align: center
 }
 
-button.welcome-page-button {
-    width: 225px;
-    height: 225px;
-    box-shadow: none;
-    border-radius: 0px;
-    border: none;
-    margin: 20px;
-    color: rgb(203, 252, 199);
-    background: rgb(76, 117, 0);
-    font-size: 22px;
-    font-weight: bold
-}
-
-button:hover {
-    background:rgb(115, 136, 75);
-    
-}
-
-button:active{
-    width: 235px;    
-    height: 235px;
-    margin: 15px;
-}
-
-div.contains-list{
-    width: 20%;
-}
-
-button.list-button{
-    margin: 5px;
-    border: none;
-    border-radius: 0;
-    width: 100%;
-    background: rgb(57, 87, 1);
-    color: rgb(203, 252, 199);
-}
 

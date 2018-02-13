@@ -1,9 +1,9 @@
 li.guests-li {
     cursor: pointer;
-    margin:5px;
+    margin:0px;
     padding-left:10px;
     color: rgb(216, 216, 216);
-    font-weight: bold
+    font-weight: 100
 }
 li.guests-li:hover {
     background-color: rgb(1, 19, 0);
