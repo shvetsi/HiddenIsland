@@ -5,9 +5,6 @@ li.guests-li {
     color: rgb(216, 216, 216);
     font-weight: 100
 }
-li.guests-li:hover {
-    background-color: rgb(1, 19, 0);
-}
 li.guests-li:active {
     
     background-color: rgb(1, 19, 0);
@@ -17,4 +14,8 @@ ul{
     list-style-type: none;
     margin: 0;
     padding: 0;
+}
+
+div.list-container{
+    height: 100%;
 }

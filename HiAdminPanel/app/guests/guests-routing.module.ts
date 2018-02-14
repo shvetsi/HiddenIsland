@@ -6,14 +6,24 @@ import { GuestDataComponent } from "./guest-data/guest-data.component";
 @NgModule({
     imports:[
         RouterModule.forChild([
-
             {
-                path: "guests",
-                component: GuestsListComponent
+                path: "",
+                redirectTo: "/guests",
+                pathMatch: "full"
             },
             {
-                path: "guests/:id",
-                component: GuestDataComponent
+                path: "guests",
+                component: GuestsListComponent,
+                children: [
+                    {
+                        path:":id",
+                        component: GuestDataComponent   
+                    },
+                    {
+                        path:"",
+                        component: GuestDataComponent   
+                    }
+                ]
             }
         ])
     ],

@@ -24,7 +24,7 @@
     border: none;
 }
 
-:host /deep/ .menu-border{
+:host /deep/ .green-border{
     border: solid rgb(76, 117, 0);
     border-width: 1px
 }
@@ -38,4 +38,29 @@
 :host /deep/ .left {
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
+}
+:host /deep/ thead {    
+    border-bottom: 2px solid rgba(51, 255, 36, 0.048);
+}
+
+:host /deep/ tr:hover {    
+    background-color: rgb(115, 136, 75);    
+}
+
+:host /deep/ table {    
+    width: 100%;
+}
+
+:host /deep/ td {  
+    padding-left: 20px;
+    padding: 5px 20px 5px 20px;
+}
+
+:host /deep/ th {  
+    padding-left: 20px;
+    padding: 5px 20px 5px 20px;
+}
+
+:host /deep/ li:hover {
+    background-color: rgb(115, 136, 75);    
 }

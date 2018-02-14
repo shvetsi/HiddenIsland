@@ -1,12 +1,17 @@
-<div>
-        <h1>Hiiiiiiiii!</h1>
+<div *ngIf="guest" >
+    <div class="green-border" style="padding: 20px">
         <h2>Name: {{guest.name}}</h2>
         <h3>Level: {{guest.level}}</h3>
+    </div>
+    <br/>
+    <div class="green-border">
         <table>
-            <tr>
-                <td>Property</td>
-                <td>Value</td>
-            </tr> 
+            <thead>
+                <tr>
+                    <th>Characteristic</th>
+                    <th>Proficiency level</th>
+                </tr> 
+            </thead>
             <tr>
                 <td>Strength</td>
                 <td>{{guest.strength}}</td>
@@ -29,3 +34,4 @@
             </tr>
         </table>
     </div>
+</div>

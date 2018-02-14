@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Route, ActivatedRoute } from "@angular/router";
 import { GuestService } from "../../shared/guest.servise";
 import { Guest } from "../../shared/guest";
@@ -8,7 +8,7 @@ import { Guest } from "../../shared/guest";
     selector: "guest-data",
     templateUrl: "guest-data.component.html"
 })
-export class GuestDataComponent{
+export class GuestDataComponent implements OnInit{
     public guest: Guest;
     public error: string;
     constructor(private guestsService: GuestService,
@@ -23,10 +23,9 @@ export class GuestDataComponent{
                     success => {this.guest = success;},
                     error => {this.error = error;}
                 )
-                return;
             }
             else{
-                this.guest = new Guest(null, null);
+                this.guest = null;
             }
         })
         

@@ -65,7 +65,6 @@ export class GuestService{
     }
 
     private handleError(error: any, caught: Observable<any>): any{        
-        alert("error");
         let message = "";
         return Observable.throw(message);
     }

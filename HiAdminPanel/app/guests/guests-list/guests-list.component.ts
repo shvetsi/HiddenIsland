@@ -22,12 +22,10 @@ export class GuestsListComponent implements OnInit{
     ngOnInit(): void {
         this.getGuests();
     }
-    private getGuests(){
-        
-        //this.guestService.getOneGuest(new Guest('d75675aa40822a2b', 'Kekeke')).then(
+    private getGuests(){        
             this.guestService.getGuests().then(
             guests => {this.guests = guests},
-            error => {this.errorMessage = error; alert(error)}
+            error => {this.errorMessage = error;}
         );
     }
 
