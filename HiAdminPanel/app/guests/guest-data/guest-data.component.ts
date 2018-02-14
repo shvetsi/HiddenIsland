@@ -6,9 +6,11 @@ import { Guest } from "../../shared/guest";
 @Component({
     moduleId: module.id,
     selector: "guest-data",
-    templateUrl: "guest-data.component.html"
+    templateUrl: "guest-data.component.html",
+    styleUrls:["guest-data.component.css"]
 })
 export class GuestDataComponent implements OnInit{
+    public dices: number[] = [4,6,8,10,12];
     public guest: Guest;
     public error: string;
     constructor(private guestsService: GuestService,

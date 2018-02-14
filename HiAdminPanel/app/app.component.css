@@ -47,6 +47,10 @@
     background-color: rgb(115, 136, 75);    
 }
 
+:host /deep/ tr.no-hover:hover {    
+    background-color: rgba(0, 0, 0, 0);    
+}
+
 :host /deep/ table {    
     width: 100%;
 }
