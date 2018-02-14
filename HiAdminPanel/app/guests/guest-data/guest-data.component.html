@@ -1,0 +1,58 @@
+<div *ngIf="guest" >
+    <div class="green-border" style="padding: 20px">
+        <h2>Name: {{guest.name}}</h2>
+        <h3>Level: {{guest.level}}</h3>
+    </div>
+    <br/>
+    <div class="green-border">
+        <table>
+            <thead>
+                <tr class="no-hover">
+                    <th>Characteristic</th>
+                    <th>Proficiency level</th>
+                    <th style="width: 10%"><button class="edit"><img class="edit" src="app/images/edit.png"/></button></th>
+                </tr> 
+            </thead>
+            <tr>
+                <td>Strength</td>
+                <td colspan="2">
+                    <div *ngFor="let dice of dices" class="stats">
+                        <img [src]="guest.strength >= dice ? 'app/images/d' + dice + '.gif' : 'app/images/d' + dice + '-grayed.gif'" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Toughness</td>
+                <td colspan="2">
+                    <div *ngFor="let dice of dices" class="stats">
+                        <img [src]="guest.toughness >= dice ? 'app/images/d' + dice + '.gif' : 'app/images/d' + dice + '-grayed.gif'" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Agility</td>
+                <td colspan="2">                    
+                    <div *ngFor="let dice of dices" class="stats">
+                        <img [src]="guest.agility >= dice ? 'app/images/d' + dice + '.gif' : 'app/images/d' + dice + '-grayed.gif'" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Smarts</td>
+                <td colspan="2">                    
+                    <div *ngFor="let dice of dices" class="stats">
+                        <img [src]="guest.smarts >= dice ? 'app/images/d' + dice + '.gif' : 'app/images/d' + dice + '-grayed.gif'" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Spirit</td>
+                <td colspan="2">                    
+                    <div *ngFor="let dice of dices" class="stats">
+                        <img [src]="guest.spirit >= dice ? 'app/images/d' + dice + '.gif' : 'app/images/d' + dice + '-grayed.gif'" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

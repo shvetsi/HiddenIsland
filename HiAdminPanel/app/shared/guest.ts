@@ -2,8 +2,9 @@ import { Skill } from "./skill"
 import { Island } from "./island"
 
 export class Guest {
-    constructor (public name: string, public island: Island){ }
-
+    constructor (public id: string, public name: string){ }
+    
+    public island: Island;
     public age: number;    
     public smarts: number = 8;
     public strength: number = 8;
