@@ -5,6 +5,7 @@ import { Observable } from "rxjs/Observable"
 import { Guest } from "./guest"
 import { Island } from "./island";
 import { forEach } from "@angular/router/src/utils/collection";
+import { Dictionary } from "./dictionary";
 
 @Injectable()
 export class GuestService{
@@ -17,7 +18,7 @@ export class GuestService{
     public getGuests():Promise<Guest[]>{   
         let guests = this.http.get(this.url)
         .toPromise()
-        .then(this.extractGuests)
+        .then(res => this.extractGuests(res, this))
         //.catch(res => alert(res.json));
         return guests;
     }
@@ -25,40 +26,23 @@ export class GuestService{
     public getOneGuest(guestId: any):Promise<Guest>{
         let result = this.http.get(this.url + "/" + guestId)
         .toPromise()
-        .then(this.extractGuest);
+        .then(res => this.extractGuest(res, this));
         return result;
     }
 
-    private extractGuest(response: Response){
-        let guest: Guest;     
+    private extractGuest(response: Response, self: any){
         let json = response.json();
-        guest = new Guest(json.id, json.name);
-        guest.age = json.age;
-        guest.strength = json.strength;
-        guest.smarts = json.smarts;
-        guest.spirit = json.spirit;
-        guest.toughness = json.toughness;
-        guest.level = json.level;
-        guest.agility = json.agility;     
-        return guest;
+        return self.createGuest(json);
     }
 
-    private extractGuests(response: Response){
+    private extractGuests(response: Response, self: any){
         let guests: Guest[] = [];
         if(response != undefined)
         {        
             let json = response.json();
             json.forEach(g => 
             {
-                let guest = new Guest(g.id, g.name);
-                guest.age = g.age;
-                guest.strength = g.strength;
-                guest.smarts = g.smarts;
-                guest.spirit = g.spirit;
-                guest.toughness = g.toughness;
-                guest.level = g.level;
-                guest.agility = g.agility;
-                guests.push(guest);
+                guests.push(self.createGuest(g));
             });
         }
         return guests;
@@ -69,15 +53,17 @@ export class GuestService{
         return Observable.throw(message);
     }
 
-    private createGuest(json: any): Guest{
-        let guest = new Guest(json.id, json.name);
+    private createGuest(json: any) {
+        let guest: Guest = new Guest(json.id, json.name);
         guest.age = json.age;
-        guest.strength = json.strength;
-        guest.smarts = json.smarts;
-        guest.spirit = json.spirit;
-        guest.toughness = json.toughness;
         guest.level = json.level;
-        guest.agility = json.agility;
+        guest.xp = json.xp;
+        guest.stats = new Dictionary<ProficiencyLevel>();
+        guest.stats.add("Strength", json.strength);
+        guest.stats.add("Smarts", json.smarts);
+        guest.stats.add("Spirit", json.spirit);
+        guest.stats.add("Toughness", json.toughness);
+        guest.stats.add("Agility", json.agility);
         return guest;
     }
 }

@@ -10,46 +10,21 @@
                 <tr class="no-hover">
                     <th>Characteristic</th>
                     <th>Proficiency level</th>
-                    <th style="width: 10%"><button class="edit"><img class="edit" src="app/images/edit.png"/></button></th>
+                    <th style="width: 10%">
+                        <button class="edit"(click)="switchEditMode()">
+                            <img class="edit" [src]="!editMode ? 'app/images/edit.png' : 'app/images/save.png'"/>
+                        </button>
+                    </th>
                 </tr> 
             </thead>
-            <tr>
-                <td>Strength</td>
+            <tr *ngFor="let key of guest.stats.keys">
+                <td>{{key}}</td>
                 <td colspan="2">
                     <div *ngFor="let dice of dices" class="stats">
-                        <img [src]="guest.strength >= dice ? 'app/images/d' + dice + '.gif' : 'app/images/d' + dice + '-grayed.gif'" />
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Toughness</td>
-                <td colspan="2">
-                    <div *ngFor="let dice of dices" class="stats">
-                        <img [src]="guest.toughness >= dice ? 'app/images/d' + dice + '.gif' : 'app/images/d' + dice + '-grayed.gif'" />
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Agility</td>
-                <td colspan="2">                    
-                    <div *ngFor="let dice of dices" class="stats">
-                        <img [src]="guest.agility >= dice ? 'app/images/d' + dice + '.gif' : 'app/images/d' + dice + '-grayed.gif'" />
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Smarts</td>
-                <td colspan="2">                    
-                    <div *ngFor="let dice of dices" class="stats">
-                        <img [src]="guest.smarts >= dice ? 'app/images/d' + dice + '.gif' : 'app/images/d' + dice + '-grayed.gif'" />
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Spirit</td>
-                <td colspan="2">                    
-                    <div *ngFor="let dice of dices" class="stats">
-                        <img [src]="guest.spirit >= dice ? 'app/images/d' + dice + '.gif' : 'app/images/d' + dice + '-grayed.gif'" />
+                        <img attr.dice-value="{{dice}}" 
+                        [class.stats-edit-img]="editMode" 
+                        [src]="guest.stats.item(key) >= dice ? 'app/images/d' + dice + '.gif' : 'app/images/d' + dice + '-grayed.gif'"
+                        (click)="changeCharacteristic(key, dice)"/>
                     </div>
                 </td>
             </tr>

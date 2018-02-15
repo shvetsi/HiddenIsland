@@ -13,6 +13,7 @@ export class GuestDataComponent implements OnInit{
     public dices: number[] = [4,6,8,10,12];
     public guest: Guest;
     public error: string;
+    public editMode: boolean = false;
     constructor(private guestsService: GuestService,
     private activeRoute: ActivatedRoute){}
 
@@ -32,8 +33,14 @@ export class GuestDataComponent implements OnInit{
         })
         
     }
-    private getGuests(){
-        
-            
+    
+    public switchEditMode(){
+        this.editMode = !this.editMode;
+    }
+
+    public changeCharacteristic(characteristic: string, value: any)
+    {
+        if(this.editMode && this.guest.stats.containsKey(characteristic))
+            this.guest.stats.add(characteristic, value);
     }
 }

@@ -64,6 +64,14 @@
 			"required": true,
 			"id": "level",
 			"order": 7
+		},
+		"xp": {
+			"name": "xp",
+			"type": "number",
+			"typeLabel": "number",
+			"required": true,
+			"id": "xp",
+			"order": 8
 		}
 	}
 }
