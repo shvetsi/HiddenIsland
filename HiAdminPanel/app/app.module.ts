@@ -8,6 +8,8 @@ import { AppRoutingModle } from "./app-routing.module";
 import { GuestsModule } from "./guests/guests.module";
 import { HttpModule } from "@angular/http";
 
+import "./rx-js.operators";
+
 @NgModule({
     imports : [ 
         BrowserModule,

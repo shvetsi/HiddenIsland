@@ -24,7 +24,9 @@
                         <img attr.dice-value="{{dice}}" 
                         [class.stats-edit-img]="editMode" 
                         [src]="guest.stats.item(key) >= dice ? 'app/images/d' + dice + '.gif' : 'app/images/d' + dice + '-grayed.gif'"
-                        (click)="changeCharacteristic(key, dice)"/>
+                        (click)="onStatsClick(key, dice)"
+                        (mouseenter)="onStatsMouseEnter(key, dice)"
+                        (mouseleave)="onStatsMouseLeave()"/>
                     </div>
                 </td>
             </tr>
