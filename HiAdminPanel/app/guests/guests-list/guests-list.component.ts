@@ -23,7 +23,7 @@ export class GuestsListComponent implements OnInit{
         this.getGuests();
     }
     private getGuests(){        
-            this.guestService.getGuests().then(
+            this.guestService.getGuests().subscribe(
             guests => {this.guests = guests},
             error => {this.errorMessage = error;}
         );

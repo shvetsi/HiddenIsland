@@ -14,6 +14,8 @@ export class GuestDataComponent implements OnInit{
     public guest: Guest;
     public error: string;
     public editMode: boolean = false;
+    private mouseOverValue: { key: string, value: ProficiencyLevel };
+
     constructor(private guestsService: GuestService,
     private activeRoute: ActivatedRoute){}
 
@@ -22,7 +24,7 @@ export class GuestDataComponent implements OnInit{
         this.activeRoute.params.forEach(p => {
             let id = p["id"];
             if(id){
-                this.guestsService.getOneGuest(id).then(
+                this.guestsService.getOneGuest(id).subscribe(
                     success => {this.guest = success;},
                     error => {this.error = error;}
                 )
@@ -38,9 +40,30 @@ export class GuestDataComponent implements OnInit{
         this.editMode = !this.editMode;
     }
 
-    public changeCharacteristic(characteristic: string, value: any)
+    public onStatsClick(characteristic: string, value: any){
+        if(this.editMode){
+            this.mouseOverValue = undefined;
+            this.changeCharacteristic(characteristic, value);
+        }
+    }
+
+    public onStatsMouseEnter(characteristic: string, value: any){
+        if(this.editMode){
+            this.mouseOverValue = { key: characteristic, value: this.guest.stats.item(characteristic)};
+            this.changeCharacteristic(characteristic, value);
+        }
+    }
+
+    public onStatsMouseLeave(){
+        if(this.editMode && this.mouseOverValue != undefined){
+            this.changeCharacteristic(this.mouseOverValue.key, this.mouseOverValue.value);
+            this.mouseOverValue = undefined;
+        }
+    }    
+
+    private changeCharacteristic(characteristic: string, value: any)
     {
-        if(this.editMode && this.guest.stats.containsKey(characteristic))
+        if(this.guest.stats.containsKey(characteristic))
             this.guest.stats.add(characteristic, value);
     }
 }
