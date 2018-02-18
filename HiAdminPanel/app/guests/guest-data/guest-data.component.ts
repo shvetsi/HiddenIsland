@@ -45,6 +45,7 @@ export class GuestDataComponent implements OnInit, CanDeactivateComponent{
     }
     
     public switchEditMode(){
+<<<<<<< HEAD
         if(this.editMode)
             this.guestsService.updateGuest(this.guest)
             .subscribe(
@@ -58,6 +59,9 @@ export class GuestDataComponent implements OnInit, CanDeactivateComponent{
                 result => this.islands = result
             );
         }
+=======
+        this.editMode = !this.editMode;
+>>>>>>> e1dfbcb67eb865fbd4632d8e8ca2872ab2d3d417
     }
 
     public onStatsClick(characteristic: string, value: any){
@@ -85,6 +89,7 @@ export class GuestDataComponent implements OnInit, CanDeactivateComponent{
     {
         if(this.guest.stats.containsKey(characteristic))
             this.guest.stats.add(characteristic, value);
+<<<<<<< HEAD
     }
 
     public onIslandSelest(islandId: any){
@@ -98,5 +103,7 @@ export class GuestDataComponent implements OnInit, CanDeactivateComponent{
         if (this.editMode && canDeactivate)
             this.editMode = false;
         return canDeactivate;
+=======
+>>>>>>> e1dfbcb67eb865fbd4632d8e8ca2872ab2d3d417
     }
 }
