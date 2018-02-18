@@ -1,8 +1,50 @@
+<div class="right-align" *ngIf="guest" >
+    <label *ngIf="error != undefined">{{error}}</label>
+    <button class="small-btn" [class.toggle-btn]="editMode" (click)="switchEditMode()">
+            <img class="edit" [src]="!editMode ? 'app/images/edit.png' : 'app/images/save.png'"/>
+    </button>
+</div>
 <div *ngIf="guest" >
-    <div class="green-border" style="padding: 20px">
-        <h2>Name: {{guest.name}}</h2>
-        <h3>Level: {{guest.level}}</h3>
+    <div class="green-border row" style="padding: 10px; margin: 0px">
+        <div class="col-sm-11">
+            <div class="row">
+                <div class="col-sm-6 no-spaces">
+                    <h3 class="col-sm-4">Name: </h3>
+                    <h3 *ngIf="!editMode">{{guest.name}}</h3>
+                    <input style="margin: 20px 0px 0px 0px" *ngIf="editMode" type="text" [(ngModel)]="guest.name"/>
+                </div>
+                <div class="col-sm-6 no-spaces">
+                    <h3 class="col-sm-4">XP: </h3>
+                    <h3 *ngIf="!editMode">{{guest.xp}}</h3>
+                    <input style="margin: 20px 0px 0px 0px" *ngIf="editMode" type="number" [(ngModel)]="guest.xp"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 no-spaces">
+                    <h3 class="col-sm-4">Level: </h3>
+                    <h3 *ngIf="!editMode">{{guest.level}}</h3>
+                    <input style="margin: 20px 0px 0px 0px" *ngIf="editMode" type="number" [(ngModel)]="guest.level"/>
+                </div>
+                <div class="col-sm-6 no-spaces">
+                    <h3 class="col-sm-4">Island: </h3>
+                    <h3 *ngIf="!editMode && guest.island != undefined"><a href="">{{guest.island.name}}</a></h3>
+                    <select style="margin: 20px 0px 0px 0px"  *ngIf="editMode" 
+                        (change)="onIslandSelest($event.target.value)" [ngModel]="guest.island.id">
+                        <option *ngFor="let island of islands" [value]="island.id">{{island.name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
     </div>
+    <br/>
+    <!-- <div class="green-border" style="padding: 20px">
+        
+         <div class="row">
+            <h3 class="col-sm-2">Level: </h3>
+            <h3 *ngIf="!editMode && guest.island != undefined">{{guest.island.level}}</h3>
+            <input style="margin: 20px 0px 0px 0px" *ngIf="editMode" type="number" [(ngModel)]="guest.island.level"/>
+        </div> 
+    </div> -->
     <br/>
     <div class="green-border">
         <table>
@@ -10,19 +52,14 @@
                 <tr class="no-hover">
                     <th>Characteristic</th>
                     <th>Proficiency level</th>
-                    <th style="width: 10%">
-                        <button class="edit"(click)="switchEditMode()">
-                            <img class="edit" [src]="!editMode ? 'app/images/edit.png' : 'app/images/save.png'"/>
-                        </button>
-                    </th>
                 </tr> 
             </thead>
             <tr *ngFor="let key of guest.stats.keys">
                 <td>{{key}}</td>
-                <td colspan="2">
+                <td>
                     <div *ngFor="let dice of dices" class="stats">
                         <img attr.dice-value="{{dice}}" 
-                        [class.stats-edit-img]="editMode" 
+                        [class.stats-edit-img]="editMode && dice > guest.stats.item(key)" 
                         [src]="guest.stats.item(key) >= dice ? 'app/images/d' + dice + '.gif' : 'app/images/d' + dice + '-grayed.gif'"
                         (click)="onStatsClick(key, dice)"
                         (mouseenter)="onStatsMouseEnter(key, dice)"

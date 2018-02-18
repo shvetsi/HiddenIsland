@@ -5,6 +5,8 @@ import { Observable } from "rxjs/Observable"
 import { Guest } from "./guest"
 import { forEach } from "@angular/router/src/utils/collection";
 import { Dictionary } from "./dictionary";
+import { ProficiencyLevel } from "./proficiency-level";
+import { IslandService } from "./island.service";
 
 @Injectable()
 export class GuestService{
@@ -12,7 +14,7 @@ export class GuestService{
     
 
 
-    constructor(private http: Http){}
+    constructor(private http: Http, private islandService: IslandService){}
 
     public getGuests():Observable<Guest[]>{   
         let guests = this.http.get(this.url)
@@ -28,26 +30,31 @@ export class GuestService{
         return result;
     }
 
-    public updateGuest(guest: Guest){
-        this.http.put(this.url + '/' + guest.id,
-    {
-        id: guest.id,
-        name: guest.name,
-        age: guest.age,
-        level: guest.level,
-        xp: guest.xp,
-        islandId: guest.island,
-        strength:guest.stats.item("Strength"),
-        smarts:guest.stats.item("Smarts"),
-        spirit:guest.stats.item("Spirit"),
-        toughness:guest.stats.item("Toughness"),
-        agility:guest.stats.item("Agility")
-    }).catch(this.handleError);
+    public updateGuest(guest: Guest): Observable<any>{
+        return this.http.put(this.url + '/' + guest.id,
+        {
+            id: guest.id,
+            name: guest.name,
+            age: guest.age,
+            level: guest.level,
+            xp: guest.xp,
+            islandId: guest.island.id,
+            strength:guest.stats.item("Strength"),
+            smarts:guest.stats.item("Smarts"),
+            spirit:guest.stats.item("Spirit"),
+            toughness:guest.stats.item("Toughness"),
+            agility:guest.stats.item("Agility")
+        }).catch(this.handleError);
     }
 
     private extractGuest(response: Response, self: any){
         let json = response.json();
-        return self.createGuest(json);
+        let guest = self.createGuest(json);
+        self.islandService.getOneIsland(json.islandId)
+        .subscribe(
+            result => guest.island = result
+        );
+        return guest;
     }
 
     private extractGuests(response: Response, self: any){

@@ -1,4 +1,4 @@
-enum ProficiencyLevel{
+export enum ProficiencyLevel{
     d4 = 4,
     d6 = 6,
     d8 = 8,

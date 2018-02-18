@@ -1,4 +1,4 @@
-:host /deep/ button {
+:host /deep/ button{
     width: 225px;
     height: 225px;
     box-shadow: none;
@@ -13,6 +13,22 @@
 
 :host /deep/ button:hover {
     background:rgb(115, 136, 75);    
+}
+
+:host /deep/ button.small-btn{
+    width: 50px; 
+    height: 50px; 
+    margin: 0px;
+}
+
+:host /deep/ button.extra-small-btn{
+    width: 28px; 
+    height: 28px; 
+    margin: 0px;
+}
+
+:host /deep/ button.toggle-btn{    
+    background: rgb(53, 82, 0);
 }
 
 :host /deep/ button.welcome:active{
@@ -39,6 +55,14 @@
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
 }
+
+:host /deep/ .right {
+    margin: 9px 4px 0px 0px;
+    vertical-align: top;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
 :host /deep/ thead {    
     border-bottom: 2px solid rgba(51, 255, 36, 0.048);
 }
@@ -67,4 +91,34 @@
 
 :host /deep/ li:hover {
     background-color: rgb(115, 136, 75);    
+}
+
+:host /deep/ input, :host /deep/ select{
+    background: rgb(230, 255, 201);
+    color: rgb(41, 41, 41);
+    box-shadow: none;
+    border: none;
+    border-radius: 2px;
+    padding: 0px 8px 0px 8px;
+    font-size: 18px;
+    height: 28px;
+    width: inherit;
+}
+
+:host /deep/ a{
+    color: rgb(76, 117, 0);
+}
+
+:host /deep/ a:hover{
+    color: rgb(29, 99, 1);
+}
+
+
+:host /deep/ .no-spaces{
+    margin: 0px;
+    padding: 0px;
+}
+
+:host /deep/ .error-text{
+    color: brown;
 }

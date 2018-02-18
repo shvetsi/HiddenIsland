@@ -18,7 +18,7 @@ export class IslandService{
 
     public getOneIsland(islandId: any): Observable<Island>{
         return this.http.get(this.url + '/' + islandId).
-        map(res => {
+        map((res: Response) => {
             let item = res.json();
             return new Island(item.id, item.name, item.level)
         });

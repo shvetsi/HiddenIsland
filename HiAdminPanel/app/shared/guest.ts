@@ -1,6 +1,7 @@
 import { Skill } from "./skill"
 import { Island } from "./island"
 import { Dictionary } from "./dictionary";
+import { ProficiencyLevel } from "./proficiency-level";
 
 export class Guest {
     constructor (public id: string, public name: string){ }
