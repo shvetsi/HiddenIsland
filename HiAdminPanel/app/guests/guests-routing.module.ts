@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { GuestsListComponent } from "./guests-list/guests-list.component";
 import { GuestDataComponent } from "./guest-data/guest-data.component";
+import { CanDeactivateGuard } from "../shared/guards/can-deactivate-guard.service";
 
 @NgModule({
     imports:[
@@ -17,7 +18,8 @@ import { GuestDataComponent } from "./guest-data/guest-data.component";
                 children: [
                     {
                         path:":id",
-                        component: GuestDataComponent   
+                        component: GuestDataComponent,
+                        canDeactivate: [CanDeactivateGuard]
                     },
                     {
                         path:"",

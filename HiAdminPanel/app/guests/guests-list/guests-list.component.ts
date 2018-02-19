@@ -7,10 +7,11 @@ import { Router, ActivatedRoute } from "@angular/router";
     moduleId: module.id,
     selector: "guests-list",
     templateUrl: "guests-list.component.html",
-    styleUrls:["guests-list.component.css", "../../../node_modules/bootstrap/dist/css/bootstrap.css"]
+    styleUrls:["guests-list.component.css"]
 })
 export class GuestsListComponent implements OnInit{
     private owner : Guest;
+    private selectedItem: any;
     public guests: any[] = [];
     public errorMessage: string;
 
@@ -23,17 +24,18 @@ export class GuestsListComponent implements OnInit{
         this.getGuests();
     }
     private getGuests(){        
-            this.guestService.getGuests().then(
+            this.guestService.getGuests().subscribe(
             guests => {this.guests = guests},
             error => {this.errorMessage = error;}
         );
     }
 
     public onSelect(guest: Guest){
-        this.router.navigate(["/guests", guest.id]);
+        this.router.navigate(["/guests", guest.id]).then(
+            success => this.selectedItem = success ? guest : this.selectedItem);
     }
 
     public goBack(){
-        this.router.navigate(["/home"]);
+        this.router.navigate(["/home"])
     }
 }

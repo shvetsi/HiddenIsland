@@ -5,9 +5,9 @@ li.guests-li {
     color: rgb(216, 216, 216);
     font-weight: 100
 }
-li.guests-li:active {
-    
-    background-color: rgb(1, 19, 0);
+
+li.selected-li {
+    background: rgb(66, 92, 19);  
 }
 
 ul{
