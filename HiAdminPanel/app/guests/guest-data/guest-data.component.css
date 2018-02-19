@@ -4,33 +4,6 @@ img{
 }
 
 img.none:hover{
-<<<<<<< HEAD
-=======
-}
-
-img.stats-edit-img[dice-value="4"]:hover{
-    content: url('app/images/d4.gif');
-}
-
-img.stats-edit-img[dice-value="6"]:hover{
-    content: url('app/images/d6.gif');
-}
-
-img.stats-edit-img[dice-value="8"]:hover{
-    content: url('app/images/d8.gif');
-}
-
-img.stats-edit-img[dice-value="10"]:hover{
-    content: url('app/images/d10.gif');
-}
-
-img.stats-edit-img[dice-value="12"]:hover{
-    content: url('app/images/d12.gif');
-}
-
-div.stats{
-    display: inline-block;
->>>>>>> e1dfbcb67eb865fbd4632d8e8ca2872ab2d3d417
 }
 
 img.stats-edit-img {

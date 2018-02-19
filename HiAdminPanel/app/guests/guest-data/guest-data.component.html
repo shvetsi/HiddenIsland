@@ -52,29 +52,14 @@
                 <tr class="no-hover">
                     <th>Characteristic</th>
                     <th>Proficiency level</th>
-<<<<<<< HEAD
-=======
-                    <th style="width: 10%">
-                        <button class="edit"(click)="switchEditMode()">
-                            <img class="edit" [src]="!editMode ? 'app/images/edit.png' : 'app/images/save.png'"/>
-                        </button>
-                    </th>
->>>>>>> e1dfbcb67eb865fbd4632d8e8ca2872ab2d3d417
                 </tr> 
             </thead>
             <tr *ngFor="let key of guest.stats.keys">
                 <td>{{key}}</td>
-<<<<<<< HEAD
                 <td>
                     <div *ngFor="let dice of dices" class="stats">
                         <img attr.dice-value="{{dice}}" 
                         [class.stats-edit-img]="editMode && dice > guest.stats.item(key)" 
-=======
-                <td colspan="2">
-                    <div *ngFor="let dice of dices" class="stats">
-                        <img attr.dice-value="{{dice}}" 
-                        [class.stats-edit-img]="editMode" 
->>>>>>> e1dfbcb67eb865fbd4632d8e8ca2872ab2d3d417
                         [src]="guest.stats.item(key) >= dice ? 'app/images/d' + dice + '.gif' : 'app/images/d' + dice + '-grayed.gif'"
                         (click)="onStatsClick(key, dice)"
                         (mouseenter)="onStatsMouseEnter(key, dice)"

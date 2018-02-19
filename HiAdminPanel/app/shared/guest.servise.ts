@@ -5,11 +5,8 @@ import { Observable } from "rxjs/Observable"
 import { Guest } from "./guest"
 import { forEach } from "@angular/router/src/utils/collection";
 import { Dictionary } from "./dictionary";
-<<<<<<< HEAD
 import { ProficiencyLevel } from "./proficiency-level";
 import { IslandService } from "./island.service";
-=======
->>>>>>> e1dfbcb67eb865fbd4632d8e8ca2872ab2d3d417
 
 @Injectable()
 export class GuestService{
@@ -33,7 +30,6 @@ export class GuestService{
         return result;
     }
 
-<<<<<<< HEAD
     public updateGuest(guest: Guest): Observable<any>{
         return this.http.put(this.url + '/' + guest.id,
         {
@@ -49,37 +45,16 @@ export class GuestService{
             toughness:guest.stats.item("Toughness"),
             agility:guest.stats.item("Agility")
         }).catch(this.handleError);
-=======
-    public updateGuest(guest: Guest){
-        this.http.put(this.url + '/' + guest.id,
-    {
-        id: guest.id,
-        name: guest.name,
-        age: guest.age,
-        level: guest.level,
-        xp: guest.xp,
-        islandId: guest.island,
-        strength:guest.stats.item("Strength"),
-        smarts:guest.stats.item("Smarts"),
-        spirit:guest.stats.item("Spirit"),
-        toughness:guest.stats.item("Toughness"),
-        agility:guest.stats.item("Agility")
-    }).catch(this.handleError);
->>>>>>> e1dfbcb67eb865fbd4632d8e8ca2872ab2d3d417
     }
 
     private extractGuest(response: Response, self: any){
         let json = response.json();
-<<<<<<< HEAD
         let guest = self.createGuest(json);
         self.islandService.getOneIsland(json.islandId)
         .subscribe(
             result => guest.island = result
         );
         return guest;
-=======
-        return self.createGuest(json);
->>>>>>> e1dfbcb67eb865fbd4632d8e8ca2872ab2d3d417
     }
 
     private extractGuests(response: Response, self: any){
