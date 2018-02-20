@@ -1,10 +1,12 @@
 <div class="container">
     <div class="row">
-        <div class="col-sm-3 list-container">     
-            
-    <button class="small-btn" (click)="goBack()">
-            <i class="arrow left"></i>
-         </button>       
+        <div class="col-sm-3 list-container">       
+            <div style="display: inline-block">     
+                <button class="small-btn" (click)="goBack()">
+                    <i class="arrow left"></i>
+                </button>
+                <button class="small-btn" (click)="createNewClick()">+</button>
+            </div>  
             <ul class="green-border">
                 <li *ngFor="let guest of guests"
                 (click)="onSelect(guest)"

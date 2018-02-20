@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Http, Response } from "@angular/http"
-import { Island } from "./island";
+import { Island } from "../island";
 import { Observable } from "rxjs/Observable";
 
 @Injectable()
