@@ -1,7 +1,8 @@
-import { Component, OnInit } from "@angular/core"
+import { Component, OnInit, OnDestroy } from "@angular/core"
 import { Guest } from "../../shared/guest"
-import { GuestService } from "../../shared/guest.servise";
-import { Router, ActivatedRoute } from "@angular/router";
+import { GuestService } from "../../shared/services/guest.servise";
+import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
+import { EventEmitterService } from "../../shared/services/event-emitter.service";
 
 @Component({
     moduleId: module.id,
@@ -10,6 +11,7 @@ import { Router, ActivatedRoute } from "@angular/router";
     styleUrls:["guests-list.component.css"]
 })
 export class GuestsListComponent implements OnInit{
+
     private owner : Guest;
     private selectedItem: any;
     public guests: any[] = [];
@@ -17,17 +19,33 @@ export class GuestsListComponent implements OnInit{
 
     constructor(private guestService: GuestService,
         private router: Router,
-        private activatedRoute: ActivatedRoute){
-        
+        private activatedRoute: ActivatedRoute,
+        private eventEmitter: EventEmitterService){
     }
+
     ngOnInit(): void {
         this.getGuests();
+        this.eventEmitter.dataEmitter.subscribe((data: any )=> {
+            let guestId = this.guests.findIndex(g => g.id == data.id);
+            if(guestId >= 0)
+                this.guests[guestId] = data;
+            else
+                this.guests.push(data);
+
+            this.onSelect(data);
+        });
     }
+
     private getGuests(){        
             this.guestService.getGuests().subscribe(
             guests => {this.guests = guests},
             error => {this.errorMessage = error;}
         );
+    }
+
+    public createNewClick(){        
+        this.router.navigate(["/guests", "new"]).then(
+            success => this.selectedItem = undefined);
     }
 
     public onSelect(guest: Guest){

@@ -2,10 +2,10 @@ import { Http, Response } from "@angular/http"
 import { Injectable } from "@angular/core"
 import { Observable } from "rxjs/Observable"
 
-import { Guest } from "./guest"
+import { Guest } from "../guest"
 import { forEach } from "@angular/router/src/utils/collection";
-import { Dictionary } from "./dictionary";
-import { ProficiencyLevel } from "./proficiency-level";
+import { Dictionary } from "../dictionary";
+import { ProficiencyLevel } from "../enums/proficiency-level";
 import { IslandService } from "./island.service";
 
 @Injectable()
@@ -30,9 +30,8 @@ export class GuestService{
         return result;
     }
 
-    public updateGuest(guest: Guest): Observable<any>{
-        return this.http.put(this.url + '/' + guest.id,
-        {
+    public updateGuest(guest: Guest): Observable<Guest>{
+        let obj = {
             id: guest.id,
             name: guest.name,
             age: guest.age,
@@ -44,7 +43,15 @@ export class GuestService{
             spirit:guest.stats.item("Spirit"),
             toughness:guest.stats.item("Toughness"),
             agility:guest.stats.item("Agility")
-        }).catch(this.handleError);
+        };
+        return guest.id == null 
+        ? this.http.post(this.url, obj)
+        .map(res=> this.extractGuest(res, this))
+        .catch(this.handleError)
+
+        : this.http.put(this.url + '/' + guest.id, obj)
+        .map(res=> this.extractGuest(res, this))
+        .catch(this.handleError).catch(this.handleError);
     }
 
     private extractGuest(response: Response, self: any){
@@ -72,7 +79,6 @@ export class GuestService{
 
     private handleError(error: any, caught: Observable<any>): any{        
         let message = "";
-        alert(caught);
         return Observable.throw(caught);
     }
 
