@@ -56,11 +56,7 @@ export class GuestService{
 
     private extractGuest(response: Response, self: any){
         let json = response.json();
-        let guest = self.createGuest(json);
-        self.islandService.getOneIsland(json.islandId)
-        .subscribe(
-            result => guest.island = result
-        );
+        let guest = self.createGuest(json);        
         return guest;
     }
 
@@ -87,6 +83,7 @@ export class GuestService{
         guest.age = json.age;
         guest.level = json.level;
         guest.xp = json.xp;
+        guest.islandId = json.islandId;
         guest.stats = new Dictionary<ProficiencyLevel>();
         guest.stats.add("Strength", json.strength);
         guest.stats.add("Smarts", json.smarts);

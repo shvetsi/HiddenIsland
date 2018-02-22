@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core"
 import { BrowserModule } from "@angular/platform-browser"
 import "./rx-js.operators";
 
-import { FormsModule } from "@angular/forms"
+import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import { AppComponent } from "./app.component"
 import { GuestService } from "./shared/services/guest.servise";
 import { HomeComponent } from "./home/home.component";
@@ -18,6 +18,7 @@ import { EventEmitterService } from "./shared/services/event-emitter.service";
         BrowserModule,
         HttpModule,
         FormsModule,
+        ReactiveFormsModule,
         AppRoutingModle,
         GuestsModule],
     declarations: [

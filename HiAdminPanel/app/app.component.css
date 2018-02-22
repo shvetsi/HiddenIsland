@@ -1,3 +1,7 @@
+:host /deep/ body, :host /deep/ html{
+    height: 100%;
+}
+
 :host /deep/ button{
     width: 225px;
     height: 225px;
@@ -11,8 +15,12 @@
     font-weight: bold
 }
 
-:host /deep/ button:hover {
+:host /deep/ button:hover, :host /deep/ button.toggle-btn:hover {
     background:rgb(115, 136, 75);    
+}
+
+:host /deep/ button:disabled, :host /deep/ button.toggle-btn:disabled {
+    background:rgb(86, 97, 67);    
 }
 
 :host /deep/ button.small-btn{
@@ -43,6 +51,13 @@
 :host /deep/ .green-border{
     border: solid rgb(76, 117, 0);
     border-width: 1px
+}
+:host /deep/ .error-container{
+    padding: 5px;
+    border: solid rgb(138, 52, 40);
+    border-width: 1px;
+    color: rgb(238, 202, 202);
+    padding-left: 20px;
 }
 :host /deep/ i {
     border: solid rgb(203, 252, 199);
