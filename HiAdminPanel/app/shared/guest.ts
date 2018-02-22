@@ -14,6 +14,7 @@ export class Guest {
         this.stats.add("Spirit", 4);
     }
     
+    public islandId: string;
     public island: Island;
     public age: number;    
     public level: number = 0;

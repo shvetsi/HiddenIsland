@@ -1,64 +1,145 @@
-<div class="right-align" *ngIf="guest" >
-    <label *ngIf="error != undefined">{{error}}</label>
-    <button class="small-btn" [class.toggle-btn]="editMode" (click)="switchEditMode()">
-            <img class="edit" [src]="!editMode ? 'app/images/edit.png' : 'app/images/save.png'"/>
-    </button>
-</div>
-<div *ngIf="guest" >
-    <div class="green-border row" style="padding: 10px; margin: 0px">
-        <div class="col-sm-11">
-            <div class="row">
-                <div class="col-sm-6 no-spaces">
-                    <h3 class="col-sm-4">Name: </h3>
-                    <h3 *ngIf="!editMode">{{guest.name}}</h3>
-                    <input style="margin: 20px 0px 0px 0px" *ngIf="editMode" type="text" [(ngModel)]="guest.name"/>
+<form *ngIf="guest" [formGroup]="guestGroup">
+    <div class="right-align">
+        <label *ngIf="error != undefined">{{error}}</label>
+        <button class="small-btn" [class.toggle-btn]="editMode" (click)="switchEditMode()" [disabled]="editMode && !guestGroup.valid">
+                <img class="edit" [src]="!editMode ? 'app/images/edit.png' : 'app/images/save.png'"/>
+        </button>
+    </div>
+    <div>
+        <div class="green-border row" style="padding: 10px; margin: 0px">
+            <div class="col-sm-11">
+                <div class="row">
+                    <div class="col-sm-6 no-spaces">
+                        <h3 class="col-sm-4">Name: </h3>
+                        <h3 *ngIf="!editMode">{{guest.name}}</h3>
+                        <input class="form-control" formControlName="name" [(ngModel)]="guest.name" *ngIf="editMode" id="name" style="margin: 20px 0px 0px 0px" type="text">
+                    </div>
+                    <div class="col-sm-6 no-spaces">
+                        <h3 class="col-sm-4">XP: </h3>
+                        <h3 *ngIf="!editMode">{{guest.xp}}</h3>
+                        <input class="form-control" formControlName="xp" [(ngModel)]="guest.xp" style="margin: 20px 0px 0px 0px" *ngIf="editMode" type="number"/>
+                    </div>
                 </div>
-                <div class="col-sm-6 no-spaces">
-                    <h3 class="col-sm-4">XP: </h3>
-                    <h3 *ngIf="!editMode">{{guest.xp}}</h3>
-                    <input style="margin: 20px 0px 0px 0px" *ngIf="editMode" type="number" [(ngModel)]="guest.xp"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6 no-spaces">
-                    <h3 class="col-sm-4">Level: </h3>
-                    <h3 *ngIf="!editMode">{{guest.level}}</h3>
-                    <input style="margin: 20px 0px 0px 0px" *ngIf="editMode" type="number" [(ngModel)]="guest.level"/>
-                </div>
-                <div class="col-sm-6 no-spaces">
-                    <h3 class="col-sm-4">Island: </h3>
-                    <h3 *ngIf="!editMode && guest.island != undefined"><a href="">{{guest.island.name}}</a></h3>
-                    <select style="margin: 20px 0px 0px 0px"  *ngIf="editMode" 
-                        (change)="onIslandSelest($event.target.value)" [ngModel]="guest.island != undefined ? guest.island.id : ''">
-                        <option *ngFor="let island of islands" [value]="island.id">{{island.name}}</option>
-                    </select>
+                <div class="row">
+                    <div class="col-sm-6 no-spaces">
+                        <h3 class="col-sm-4">Level: </h3>
+                        <h3 *ngIf="!editMode">{{guest.level}}</h3>
+                        <input  class="form-control" formControlName="level" [(ngModel)]="guest.level" style="margin: 20px 0px 0px 0px" *ngIf="editMode" type="number" />
+                    </div>
+                    <div class="col-sm-6 no-spaces">
+                        <h3 class="col-sm-4">Island: </h3>
+                        <h3 *ngIf="!editMode && guest.island != undefined"><a href="">{{guest.island.name}}</a></h3>
+                        <select formControlName="islandId" style="margin: 20px 0px 0px 0px"  *ngIf="editMode" 
+                            (change)="onIslandSelest($event.target.value)">
+                            <option *ngFor="let island of islands" [value]="island.id">{{island.name}}</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
+        <br/>
+        <div style="display: block" class="error-container" *ngIf="formErrors.name || formErrors.xp || formErrors.level || formErrors.islandId">
+                    <p>{{formErrors.name}}</p>
+                    <p>{{formErrors.xp}}</p>
+                    <p>{{formErrors.level}}</p>
+                    <p>{{formErrors.islandId}}</p>
+        </div>
+        <br *ngIf="formErrors.name || formErrors.xp || formErrors.level || formErrors.islandId"/>
+        <div class="green-border">
+            <table>
+                <thead>
+                    <tr class="no-hover">
+                        <th>Characteristic</th>
+                        <th>Proficiency level</th>
+                    </tr> 
+                </thead>
+                <tr *ngFor="let key of guest.stats.keys">
+                    <td>{{key}}</td>
+                    <td>
+                        <div *ngFor="let dice of dices" class="stats">
+                            <img attr.dice-value="{{dice}}" 
+                            [class.stats-edit-img]="editMode && dice > guest.stats.item(key)" 
+                            [src]="guest.stats.item(key) >= dice ? 'app/images/d' + dice + '.gif' : 'app/images/d' + dice + '-grayed.gif'"
+                            (click)="onStatsClick(key, dice)"
+                            (mouseenter)="onStatsMouseEnter(key, dice)"
+                            (mouseleave)="onStatsMouseLeave()"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <br/>
-    <br/>
-    <div class="green-border">
-        <table>
-            <thead>
-                <tr class="no-hover">
-                    <th>Characteristic</th>
-                    <th>Proficiency level</th>
-                </tr> 
-            </thead>
-            <tr *ngFor="let key of guest.stats.keys">
-                <td>{{key}}</td>
-                <td>
-                    <div *ngFor="let dice of dices" class="stats">
-                        <img attr.dice-value="{{dice}}" 
-                        [class.stats-edit-img]="editMode && dice > guest.stats.item(key)" 
-                        [src]="guest.stats.item(key) >= dice ? 'app/images/d' + dice + '.gif' : 'app/images/d' + dice + '-grayed.gif'"
-                        (click)="onStatsClick(key, dice)"
-                        (mouseenter)="onStatsMouseEnter(key, dice)"
-                        (mouseleave)="onStatsMouseLeave()"/>
+</form>
+
+    <!-- <form #guestform="ngForm">
+            <div class="right-align" *ngIf="guest" >
+                <label *ngIf="error != undefined">{{error}}</label>
+                <button class="small-btn" [class.toggle-btn]="editMode" (click)="switchEditMode()" [disabled]="editMode && !guestform.form.valid">
+                        <img class="edit" [src]="!editMode ? 'app/images/edit.png' : 'app/images/save.png'"/>
+                </button>
+            </div>
+            <div *ngIf="guest" >
+                <div class="green-border row" style="padding: 10px; margin: 0px">
+                    <div class="col-sm-11">
+                        <div class="row">
+                            <div class="col-sm-6 no-spaces">
+                                <h3 class="col-sm-4">Name: </h3>
+                                <h3 *ngIf="!editMode">{{guest.name}}</h3>
+                                <input class="form-control" id="name" style="margin: 20px 0px 0px 0px" [attr.hidden]="!editMode" type="text" 
+                                required [(ngModel)]="guest.name" name="myModel"  #myModel="ngModel">
+                                <div [hidden]="myModel.valid || myModel.pristine" class="alert alert-danger">
+                                        ":)))"
+                                </div>
+                            </div>
+                            <div class="col-sm-6 no-spaces">
+                                <h3 class="col-sm-4">XP: </h3>
+                                <h3 *ngIf="!editMode">{{guest.xp}}</h3>
+                                <input name="xp" style="margin: 20px 0px 0px 0px" *ngIf="editMode" type="number" [(ngModel)]="guest.xp"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 no-spaces">
+                                <h3 class="col-sm-4">Level: </h3>
+                                <h3 *ngIf="!editMode">{{guest.level}}</h3>
+                                <input name="lvl" style="margin: 20px 0px 0px 0px" *ngIf="editMode" type="number" [(ngModel)]="guest.level"/>
+                            </div>
+                            <div class="col-sm-6 no-spaces">
+                                <h3 class="col-sm-4">Island: </h3>
+                                <h3 *ngIf="!editMode && guest.island != undefined"><a href="">{{guest.island.name}}</a></h3>
+                                <select name="island" style="margin: 20px 0px 0px 0px"  *ngIf="editMode" 
+                                    (change)="onIslandSelest($event.target.value)" [ngModel]="guest.island != undefined ? guest.island.id : ''">
+                                    <option *ngFor="let island of islands" [value]="island.id">{{island.name}}</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                </td>
-            </tr>
-        </table>
-    </div>
-</div>
+                </div>
+                
+                <br/>
+        
+                <br/>
+                <div class="green-border">
+                    <table>
+                        <thead>
+                            <tr class="no-hover">
+                                <th>Characteristic</th>
+                                <th>Proficiency level</th>
+                            </tr> 
+                        </thead>
+                        <tr *ngFor="let key of guest.stats.keys">
+                            <td>{{key}}</td>
+                            <td>
+                                <div *ngFor="let dice of dices" class="stats">
+                                    <img attr.dice-value="{{dice}}" 
+                                    [class.stats-edit-img]="editMode && dice > guest.stats.item(key)" 
+                                    [src]="guest.stats.item(key) >= dice ? 'app/images/d' + dice + '.gif' : 'app/images/d' + dice + '-grayed.gif'"
+                                    (click)="onStatsClick(key, dice)"
+                                    (mouseenter)="onStatsMouseEnter(key, dice)"
+                                    (mouseleave)="onStatsMouseLeave()"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </form> -->

@@ -10,6 +10,7 @@ import { Observable } from "rxjs/Observable";
 import { Dictionary } from "../../shared/dictionary";
 import { Characteristics } from "../../shared/enums/characteristics";
 import { EventEmitterService } from "../../shared/services/event-emitter.service";
+import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 
 @Component({
     moduleId: module.id,
@@ -21,17 +22,51 @@ export class GuestDataComponent implements OnInit, CanDeactivateComponent{
     public dices: number[] = [4,6,8,10,12];
     public guest: Guest = null;
     public islands: Island[];
+    public guestGroup: FormGroup;
     @Input()
     public message: string;
     public editMode: boolean = false;
     private mouseOverValue: { key: string, value: ProficiencyLevel };
     private initId: string;
+    formErrors = {
+        "name": "",
+        "xp": "",
+        "level": "",
+        "islandId": ""
+    }
+
+    validationMessages = {        
+        "name": {
+            "required": "Name is a required field",
+            "minlength": "Name must contains more than 1 symbol"
+        },
+        "xp": {
+            "required": "XP is a required field",
+            "pattern": "XP value must be a number below 399"
+        },
+        "level": {
+            "required": "Level is a required field",
+            "pattern": "Level value must be a number below 399"
+        },
+        "islandId": {
+            "required": "Island is a required field",
+        }
+    }
 
     constructor(private guestsService: GuestService,
         private islandService: IslandService,
         private activeRoute: ActivatedRoute,
         private router: Router,
-        private eventEmitter: EventEmitterService){}
+        private eventEmitter: EventEmitterService,
+        private formBuilder: FormBuilder){
+
+            this.guestGroup = this.formBuilder.group({
+                name: ['', [Validators.required, Validators.minLength(2)]],
+                xp: ['', [Validators.required, Validators.pattern("([0-9])|([0-9]{1,2})|([0-3]{1,1}\\d{1,2})")]],
+                level: ['', [Validators.required, Validators.pattern("([0-9])|([0-9]{1,2})|([0-3]{1,1}\\d{1,2})")]],
+                islandId: ['', Validators.required],
+            });
+        }
 
     
     ngOnInit(): void {
@@ -40,19 +75,63 @@ export class GuestDataComponent implements OnInit, CanDeactivateComponent{
             this.initId = p["id"];
             if(this.initId && this.initId != "new"){
                 this.guestsService.getOneGuest(this.initId).subscribe(
-                    success => {this.guest = success;},
+                    guestResult => {
+                        this.guest = guestResult;
+                        this.islandService.getOneIsland(this.guest.islandId)
+                            .subscribe(
+                                islandResult => {
+                                    this.guest.island = islandResult;
+                                    this.buildForm();
+                                }
+                            );
+                    },
                     error => {this.message = error.data;}
                 )
             }
             else if(this.initId){
                 this.guest = new Guest(null, null, true);
+                this.buildForm();
                 this.switchEditMode();
             }
         })
         
     }
+
+    private buildForm(){
+        this.guestGroup = this.formBuilder.group({
+            name: [this.guest.name, {
+                    validators:[Validators.required, Validators.minLength(2)],
+                    updateOn:'blur'
+                }
+            ],
+            xp: [this.guest.xp, [Validators.required, Validators.pattern("([0-9]|[1-9][0-9]|[12][0-9]{2}|3[0-4][0-9]|350)")]],
+            level: [this.guest.level, [Validators.required, Validators.pattern("([0-1]?[0-9])")]],
+            islandId: [this.guest.islandId, Validators.required],
+        });
+
+        this.guestGroup.valueChanges.subscribe(
+            data => this.onValueChanged()
+        );
+    }
+
+    onValueChanged(){
+        let form = this.guestGroup;
+
+        for(let field in this.formErrors){
+            this.formErrors[field] = "";
+            let control = form.get(field);
+            if(control && !control.valid && control.dirty){
+                let message = this.validationMessages[field];
+                for(let error in control.errors){
+                    console.log(error);
+                    this.formErrors[field] += message[error] + '. ';
+                }
+            }
+        }
+    }
     
     public switchEditMode(){
+        console.log(this.guest);
         if(this.editMode){
             this.guestsService.updateGuest(this.guest)
             .subscribe(
@@ -94,7 +173,7 @@ export class GuestDataComponent implements OnInit, CanDeactivateComponent{
             this.changeCharacteristic(this.mouseOverValue.key, this.mouseOverValue.value);
             this.mouseOverValue = undefined;
         }
-    }    
+    }
 
     private changeCharacteristic(characteristic: string, value: any)
     {
